@@ -14,7 +14,7 @@ const Spotify = {
         }
        return result;
     },
-    getAccessToken() {
+    async getAccessToken() {
         if(UAT !== "") {
             return UAT;
         }
@@ -34,10 +34,13 @@ const Spotify = {
                 url += '&scope=' + encodeURIComponent(scope);
                 url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
                 url += '&state=' + encodeURIComponent(state);
-
+            
+            window.location.href = url;
 
             UAT = window.location.href.match(tokenRegex);
             expiry = window.location.href.match(expiryRegex);
+
+            console.log(UAT + " | " + expiry);
         }
     }
 };
