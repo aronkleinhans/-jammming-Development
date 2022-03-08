@@ -14,7 +14,7 @@ const Spotify = {
         }
        return result;
     },
-    async getAccessToken() {
+    getAccessToken() {
         if(UAT !== "") {
             return UAT;
         }
