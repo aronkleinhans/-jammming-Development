@@ -17,38 +17,8 @@ class App extends React.Component {
 
     this.state = {
       playlistName : "> Name Your Playlist <",
-      searchResults : [ 
-        {
-        name : "Occassional Magic",
-        artist : 'Yppah',
-        album : 'Occassional Magic',
-        id : 1,
-        URI : "sfdhg;oeriu48455$%%"
-        },
-        {          
-        name : "One more magic potion",
-        artist : 'Ensiferum',
-        album : 'One more magic potion',
-        id : 2,
-        URI : "sfdrytryu66655"
-        },
-        {
-          name : "Feast Of Fire",
-          artist : "Trivium",
-          album : "In The Court Of The Dragon",
-          id : 3,
-          URI : "444this11Really3245IsRandom!@"
-        }
-      ],
-      playlistTracks : [ 
-        {
-        name : "Feast Of Fire",
-        artist : "Trivium",
-        album : "In The Court Of The Dragon",
-        id : 3,
-        URI : "444this11Really3245IsRandom!@"
-        }
-      ]
+      searchResults : [],
+      playlistTracks : []
     };
   }
 
@@ -77,14 +47,15 @@ class App extends React.Component {
   savePlaylist() {
     let trackURIs = [];
     this.state.playlistTracks.forEach(track => {
-      trackURIs.push(track.URI);
+      trackURIs.push(track.uri);
     });
-    console.log(trackURIs);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs)
   }
 
-  search(term) {
-    console.log(term);
+  async search(term) {
     Spotify.getAccessToken();
+    const list = await Spotify.search(term);
+    this.setState({searchResults: list});
   }
   
   render() {
